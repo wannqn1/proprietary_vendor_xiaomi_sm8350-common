@@ -5665,6 +5665,10 @@ cc_prebuilt_library_shared {
     strip: {
         none: true,
     },
+    shared_libs: select(soong_config_variable("xiaomi_sm8350", "use_renoir_ssccalapi"), {
+        true: ["//vendor/xiaomi/renoir:libssccalapi"],
+        default: ["libssccalapi_dummy"],
+    }),
     target: {
         android_arm64: {
             srcs: [
@@ -5678,7 +5682,6 @@ cc_prebuilt_library_shared {
                 "libcutils",
                 "libhardware",
                 "libbase",
-                "libssccalapi",
                 "vendor.xiaomi.hardware.citsensorservice@1.0",
                 "vendor.xiaomi.hardware.citsensorservice@1.1",
                 "android.frameworks.sensorservice@1.0",
@@ -15001,6 +15004,10 @@ cc_prebuilt_binary {
 cc_prebuilt_binary {
     name: "vendor.xiaomi.hardware.citsensorservice@1.1-service",
     owner: "xiaomi",
+    shared_libs: select(soong_config_variable("xiaomi_sm8350", "use_renoir_ssccalapi"), {
+        true: ["//vendor/xiaomi/renoir:libssccalapi"],
+        default: ["libssccalapi_dummy"],
+    }),
     target: {
         android_arm64: {
             srcs: [
@@ -15011,7 +15018,6 @@ cc_prebuilt_binary {
                 "libcutils",
                 "libbase",
                 "libutils",
-                "libssccalapi",
                 "libhidlbase",
                 "libhidltransport",
                 "vendor.xiaomi.hardware.citsensorservice@1.0",
@@ -16151,7 +16157,8 @@ filegroup {
 }
 
 cc_library_shared {
-    name: "libssccalapi",
+    name: "libssccalapi_dummy",
+    stem: "libssccalapi",
     compile_multilib: "64",
     soc_specific: true,
 }
