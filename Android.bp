@@ -16158,6 +16158,10 @@ filegroup {
 
 cc_library_shared {
     name: "libssccalapi_dummy",
+    enabled: select(soong_config_variable("xiaomi_sm8350", "use_renoir_ssccalapi"), {
+        true: false,
+        default: true,
+    }),
     stem: "libssccalapi",
     compile_multilib: "64",
     soc_specific: true,
